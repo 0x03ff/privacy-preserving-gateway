@@ -1,0 +1,80 @@
+# ==========================================
+# Node.js & SvelteKit
+# ==========================================
+node_modules/
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
+
+# ==========================================
+# Operating System & Editors
+# ==========================================
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# ==========================================
+# Environment Variables
+# ==========================================
+.env
+.env.*
+!.env.example
+!.env.test
+!/configs/env/*.go
+
+# ==========================================
+# Vite Build Timestamps
+# ==========================================
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# ==========================================
+# Go Binaries & Workspaces
+# ==========================================
+/bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+go.work
+go.work.sum
+
+# ==========================================
+# Logs & CSV Exports
+# ==========================================
+/configs/logs/*.log
+/configs/logs/*.csv
+
+# ==========================================
+# SQLite Databases (Bun ORM)
+# ==========================================
+/configs/database/*.db
+/configs/database/*.db-shm
+/configs/database/*.db-wal
+*.db
+*.db-shm
+*.db-wal
+
+# ==========================================
+# FAME Cryptography & Certificates
+# ==========================================
+/configs/fame/*.gob
+/assets/fame/*.gob
+*.gob
+configs/attrib_keys
+
+configs/ssl/*.pem
+configs/key/*.key
+configs/key/*.pem
