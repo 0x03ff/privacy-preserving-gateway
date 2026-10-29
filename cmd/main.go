@@ -17,8 +17,8 @@ import (
 )
 
 func main() {
-	// 1. Load Environment
-	if err := godotenv.Load("configs/env/.env"); err != nil {
+	// 1. Load Environment from var/env/.env
+	if err := godotenv.Load("var/env/.env"); err != nil {
 		slog.Warn("No .env file found, relying on system environment variables")
 	}
 
@@ -36,8 +36,16 @@ func main() {
 		slog.Error("Failed to setup FAME keys", "error", err)
 	}
 
-	// 3. Initialize SQLite Database via Bun ORM
-	dbAddr := configutils.GetEnvString("DB_ADDR", "file:configs/database/app.db?cache=shared&_pragma=busy_timeout=5000&_pragma=journal_mode=WAL")
+	if err := configutils.SetupAppKeys(); err != nil {
+		slog.Error("Failed to setup app signing keys", "error", err)
+	}
+
+	if err := configutils.SetupTLSCertificates(); err != nil {
+		slog.Error("Failed to setup TLS certificates", "error", err)
+	}
+
+	// 3. Initialize SQLite Database via Bun ORM (pointing to var/db/app.db)
+	dbAddr := configutils.GetEnvString("DB_ADDR", "file:var/db/app.db?cache=shared&_pragma=busy_timeout=5000&_pragma=journal_mode=WAL")
 	
 	dbConfig := database.DBConfig{
 		DB_addr:      dbAddr,
@@ -53,10 +61,10 @@ func main() {
 	}
 	defer db.Close()
 
-	// 4. Load TLS Configuration
+	// 4. Load TLS Configuration from var/ssl/
 	tlsCfg := &configs.TlsConfig{
-		CertFile:   "configs/ssl/fullchain.pem",
-		KeyFile:    "configs/ssl/go_key.pem",
+		CertFile:   "var/ssl/fullchain.pem",
+		KeyFile:    "var/ssl/go_key.pem",
 		MinVersion: tls.VersionTLS12,
 	}
 	tls_config, err := tlsCfg.NewTLSConfig()
@@ -67,8 +75,8 @@ func main() {
 	// 5. Initialize Application
 	app := &configs.Application{
 		Tlsconfig:    tls_config,
-		Cert_path:    "configs/ssl/fullchain.pem",
-		Key_path:     "configs/ssl/go_key.pem",
+		Cert_path:    "var/ssl/fullchain.pem",
+		Key_path:     "var/ssl/go_key.pem",
 		JsonHandlers: json.NewHandlers(validate),
 		AuthHandlers: auth.NewHandlers(validate),
 	}

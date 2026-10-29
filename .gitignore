@@ -24,22 +24,13 @@ Thumbs.db
 *.sublime-project
 
 # ==========================================
-# Environment Variables
-# ==========================================
-.env
-.env.*
-!.env.example
-!.env.test
-!/configs/env/*.go
-
-# ==========================================
 # Vite Build Timestamps
 # ==========================================
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 # ==========================================
-# Go Binaries & Workspaces
+# Go Binaries, Workspaces & WASM Artifacts
 # ==========================================
 /bin/
 *.exe
@@ -51,30 +42,47 @@ vite.config.ts.timestamp-*
 go.work
 go.work.sum
 
-# ==========================================
-# Logs & CSV Exports
-# ==========================================
-/configs/logs/*.log
-/configs/logs/*.csv
+# Ignore compiled WASM binaries (keep .gitkeep tracked)
+/static/wasm/*.wasm
+/static/wasm/wasm_exec.js
+!/static/wasm/.gitkeep
+
 
 # ==========================================
+# SQLite Databases (Bun ORM) under var/db
+# ==========================================
+/var/db/*.db
+/var/db/*.db-shm
+/var/db/*.db-wal
+!/var/db/.gitkeep
+
+
+# ==========================================
+# Runtime State & Storage (var/ directory)
+# ==========================================
+# Environment Variables
+!/var.env.example
+
 # SQLite Databases (Bun ORM)
-# ==========================================
-/configs/database/*.db
-/configs/database/*.db-shm
-/configs/database/*.db-wal
-*.db
-*.db-shm
-*.db-wal
+/var/database/*.db
+/var/database/*.db-shm
+/var/database/*.db-wal
 
-# ==========================================
-# FAME Cryptography & Certificates
-# ==========================================
-/configs/fame/*.gob
-/assets/fame/*.gob
-*.gob
-configs/attrib_keys
+# Logs & CSV Exports
+/var/logs/*.log
+/var/logs/*.csv
 
-configs/ssl/*.pem
-configs/key/*.key
-configs/key/*.pem
+# FAME Cryptographic State (.gob files)
+/var/fame/*.gob
+!/var/fame/.gitkeep
+
+# SSL Certificates & Private Keys
+/var/ssl/*.pem
+/var/ssl/*.key
+/var/ssl/*.csr
+!/var/ssl/.gitkeep
+
+# General Secrets & Keys
+/var/key/*.key
+/var/key/*.pem
+!/var/key/.gitkeep

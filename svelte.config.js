@@ -11,7 +11,7 @@ const config = {
         runes: true
     },
 
-    // 3. SvelteKit specific options (like your static adapter)
+    // 3. SvelteKit specific options (like static adapter)
     kit: {
         adapter: adapter({
             pages: 'build',

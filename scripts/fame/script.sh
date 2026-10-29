@@ -5,7 +5,7 @@ set -e
 cd "$(dirname "$0")"
 
 # Define output path relative to scripts/fame/
-OUTPUT_DIR="../../static"
+OUTPUT_DIR="../../static/wasm"
 
 echo "Compiling FAME to WebAssembly..."
 GOOS=js GOARCH=wasm go build -o "$OUTPUT_DIR/fame.wasm" main.go
